@@ -35,17 +35,8 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
   const createContact = useCreateContact()
   const updateContact = useUpdateContact()
 
-  // Wait for existing contact data before rendering form to ensure defaultValues are set
-  if (mode === 'edit' && contactLoading) {
-    return (
-      <div className="space-y-4">
-        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
-        <div className="h-10 w-full bg-muted rounded animate-pulse" />
-        <div className="h-10 w-full bg-muted rounded animate-pulse" />
-      </div>
-    )
-  }
-
+  // useForm must be called unconditionally (Rules of Hooks)
+  // defaultValues is set after the loading guard renders, so existingContact is defined when the form mounts
   const {
     register,
     handleSubmit,
@@ -62,6 +53,17 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
         }
       : undefined,
   })
+
+  // Wait for existing contact data before rendering form to ensure defaultValues are set
+  if (mode === 'edit' && contactLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+        <div className="h-10 w-full bg-muted rounded animate-pulse" />
+        <div className="h-10 w-full bg-muted rounded animate-pulse" />
+      </div>
+    )
+  }
 
   const onSubmit = async (data: ContactFormData) => {
     const contact = {
