@@ -22,7 +22,7 @@ export function ContactDetailPage({ contactId }: ContactDetailPageProps) {
   const deleteContact = useDeleteContact()
 
   if (isLoading) return <LoadingSkeleton count={2} />
-  if (isError || !contact) return <ErrorState message="Contact introuvable." />
+  if (isError || !contact) return <ErrorState message="Personne introuvable." />
 
   const days = daysUntilBirthday(contact)
   const age = getNextAge(contact)
@@ -31,7 +31,7 @@ export function ContactDetailPage({ contactId }: ContactDetailPageProps) {
 
   const handleDelete = async () => {
     await deleteContact.mutateAsync(contact.id)
-    toast.success('Contact supprimé')
+    toast.success('Personne supprimée')
     navigate({ to: '/contacts' })
   }
 

@@ -1,8 +1,10 @@
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
 import { useGetGroupById } from '@/application/group/useGetGroupById'
+import { useUpdateGroup } from '@/application/group/useUpdateGroup'
 import { useGetContacts } from '@/application/contact/useGetContacts'
 import { ContactCard } from '@/ui/components/ContactCard'
+import { AvatarPicker } from '@/ui/components/AvatarPicker'
 import { LoadingSkeleton } from '@/ui/components/states/LoadingSkeleton'
 import { ErrorState } from '@/ui/components/states/ErrorState'
 import { EmptyState } from '@/ui/components/states/EmptyState'
@@ -16,6 +18,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
   const navigate = useNavigate()
   const { data: group, isLoading, isError } = useGetGroupById(groupId)
   const { data: contacts = [] } = useGetContacts()
+  const updateGroup = useUpdateGroup()
 
   if (isLoading) return <LoadingSkeleton count={3} />
   if (isError || !group) return <ErrorState message="Groupe introuvable." />
@@ -24,27 +27,29 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" onClick={() =>
           navigate({ to: '/groups' })
         }>
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <div
-          className="h-8 w-8 rounded-full shrink-0"
-          style={{ backgroundColor: group.color }}
+        <AvatarPicker
+          value={group.avatarUrl}
+          initials={group.name.slice(0, 2).toUpperCase()}
+          color={group.color}
+          onChange={(base64) => updateGroup.mutate({ ...group, avatarUrl: base64 })}
         />
         <h2 className="text-2xl font-bold">{group.name}</h2>
       </div>
 
       <p className="text-muted-foreground">
-        {members.length} contact{members.length > 1 ? 's' : ''}
+        {members.length} personne{members.length > 1 ? 's' : ''}
       </p>
 
       {members.length === 0 ? (
         <EmptyState
-          message="Aucun contact dans ce groupe."
-          ctaLabel="Ajouter un contact"
+          message="Aucune personne dans ce groupe."
+          ctaLabel="Ajouter une personne"
           onCta={() => navigate({ to: '/contacts/new' })}
         />
       ) : (
@@ -54,7 +59,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
               key={c.id}
               contact={c}
               group={group}
-              onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
+              onClick={() => navigate({ to: '/contacts/$id/edit', params: { id: c.id } })}
             />
           ))}
         </div>

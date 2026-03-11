@@ -5,4 +5,5 @@ export type Contact = {
   birthday: string // ISO date "YYYY-MM-DD"
   groupId: string
   notes?: string
+  avatarUrl?: string
 }

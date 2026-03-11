@@ -1,13 +1,16 @@
+import { useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ChevronDown, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useGetGroups } from '@/application/group/useGetGroups'
 import { useCreateContact } from '@/application/contact/useCreateContact'
 import { useUpdateContact } from '@/application/contact/useUpdateContact'
+import { useDeleteContact } from '@/application/contact/useDeleteContact'
 import { useGetContactById } from '@/application/contact/useGetContactById'
+import { AvatarPicker } from '@/ui/components/AvatarPicker'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -34,6 +37,9 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
 
   const createContact = useCreateContact()
   const updateContact = useUpdateContact()
+  const deleteContact = useDeleteContact()
+
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(existingContact?.avatarUrl)
 
   // useForm must be called unconditionally (Rules of Hooks)
   // defaultValues is set after the loading guard renders, so existingContact is defined when the form mounts
@@ -69,18 +75,30 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
     const contact = {
       id: contactId ?? crypto.randomUUID(),
       ...data,
+      avatarUrl,
     }
 
     if (mode === 'create') {
       await createContact.mutateAsync(contact)
-      toast.success('Contact ajouté avec succès')
+      toast.success('Personne ajoutée avec succès')
     } else {
       await updateContact.mutateAsync(contact)
-      toast.success('Contact mis à jour')
+      toast.success('Personne mise à jour')
     }
 
     navigate({ to: '/contacts' })
   }
+
+  const handleDelete = async () => {
+    if (!contactId) return
+    await deleteContact.mutateAsync(contactId)
+    toast.success('Personne supprimée')
+    navigate({ to: '/contacts' })
+  }
+
+  const firstName = existingContact?.firstName ?? ''
+  const lastName = existingContact?.lastName ?? ''
+  const initials = `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase() || '?'
 
   return (
     <div className="space-y-6">
@@ -91,11 +109,19 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h2 className="text-2xl font-bold">
-          {mode === 'create' ? 'Nouveau contact' : 'Modifier le contact'}
+          {mode === 'create' ? 'Nouvelle personne' : 'Modifier la personne'}
         </h2>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex justify-center pb-2">
+          <AvatarPicker
+            value={avatarUrl}
+            initials={initials}
+            onChange={setAvatarUrl}
+          />
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <Label htmlFor="firstName">Prénom</Label>
@@ -123,16 +149,19 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
 
         <div className="space-y-1">
           <Label htmlFor="groupId">Groupe</Label>
-          <select
-            id="groupId"
-            {...register('groupId')}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-          >
-            <option value="">Choisir un groupe</option>
-            {groups.map((g) => (
-              <option key={g.id} value={g.id}>{g.name}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              id="groupId"
+              {...register('groupId')}
+              className="flex h-10 w-full appearance-none rounded-xl border border-input bg-card px-4 py-2 pr-10 text-sm outline-none focus:border-ring focus:ring-3 focus:ring-ring/50"
+            >
+              <option value="">Choisir un groupe</option>
+              {groups.map((g) => (
+                <option key={g.id} value={g.id}>{g.name}</option>
+              ))}
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          </div>
           {errors.groupId && (
             <p className="text-xs text-destructive">{errors.groupId.message}</p>
           )}
@@ -143,7 +172,7 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
           <textarea
             id="notes"
             {...register('notes')}
-            className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm"
+            className="flex min-h-[100px] w-full rounded-xl border border-input bg-card px-4 py-3 text-sm outline-none focus:border-ring focus:ring-3 focus:ring-ring/50 resize-none"
             placeholder="Idées cadeaux, préférences..."
           />
         </div>
@@ -153,8 +182,21 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
           className="w-full"
           disabled={createContact.isPending || updateContact.isPending}
         >
-          {mode === 'create' ? 'Ajouter le contact' : 'Enregistrer les modifications'}
+          {mode === 'create' ? 'Ajouter la personne' : 'Enregistrer les modifications'}
         </Button>
+
+        {mode === 'edit' && (
+          <Button
+            type="button"
+            variant="destructive"
+            className="w-full"
+            onClick={handleDelete}
+            disabled={deleteContact.isPending}
+          >
+            <Trash2 className="h-4 w-4 mr-2" />
+            Supprimer cette personne
+          </Button>
+        )}
       </form>
     </div>
   )

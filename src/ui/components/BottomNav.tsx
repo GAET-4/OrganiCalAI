@@ -4,15 +4,16 @@ import { navItems } from '@/ui/nav/navItems'
 
 export function BottomNav() {
   return (
-    <nav className="md:hidden fixed bottom-0 inset-x-0 bg-background shadow-[0_-4px_10px_#D1D9E6,-0px_-0px_8px_#FFFFFF]">
-      <div className="flex">
+    <nav className="md:hidden fixed bottom-4 inset-x-4 z-50">
+      <div className="flex items-center justify-around rounded-2xl bg-background/80 backdrop-blur-md shadow-neo px-2 py-1">
         {navItems.map(({ to, label, icon: Icon }) => (
           <Link
             key={to}
             to={to}
             className={cn(
-              'flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium',
-              'text-muted-foreground [&.active]:text-primary [&.active]:bg-secondary rounded-xl px-2 transition-colors'
+              'flex flex-1 flex-col items-center gap-1 py-2.5 text-xs font-medium rounded-xl px-2 transition-all duration-200',
+              'text-muted-foreground hover:text-foreground',
+              '[&.active]:text-primary [&.active]:bg-secondary'
             )}
           >
             <Icon className="h-5 w-5" />

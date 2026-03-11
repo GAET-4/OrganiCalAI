@@ -14,4 +14,7 @@ export class JsonGroupRepository implements GroupRepository {
     const groups = await this.getAll()
     return groups.find((g) => g.id === id)
   }
+
+  // Mock V1 : persistence handled by TanStack Query cache
+  async save(_group: Group): Promise<void> {}
 }

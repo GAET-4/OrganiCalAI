@@ -116,9 +116,9 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
     /* Neomorphic shadows */
-    --shadow-neo: 6px 6px 12px #D1D9E6, -6px -6px 12px #FFFFFF;
-    --shadow-neo-sm: 3px 3px 6px #D1D9E6, -3px -3px 6px #FFFFFF;
-    --shadow-neo-pressed: inset 3px 3px 6px #D1D9E6, inset -3px -3px 6px #FFFFFF;
+    --shadow-neo: 6px 6px 14px #C8D0DF, -6px -6px 14px #FFFFFF;
+    --shadow-neo-sm: 3px 3px 8px #C8D0DF, -3px -3px 8px #FFFFFF;
+    --shadow-neo-pressed: inset 3px 3px 8px #C8D0DF, inset -3px -3px 8px #FFFFFF;
 }
 
 @layer base {

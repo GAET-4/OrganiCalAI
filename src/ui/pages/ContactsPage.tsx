@@ -33,7 +33,7 @@ export function ContactsPage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Contacts</h2>
+        <h2 className="text-2xl font-bold">Personnes</h2>
         <Button size="sm" onClick={() =>
           navigate({ to: '/contacts/new' })
         }>
@@ -55,10 +55,10 @@ export function ContactsPage() {
       <div className="flex gap-2 flex-wrap">
         <button
           onClick={() => setActiveGroupId(null)}
-          className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
+          className={`rounded-full px-3 py-1 text-sm font-medium transition-all ${
             !activeGroupId
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              ? 'bg-primary text-primary-foreground shadow-neo-sm'
+              : 'bg-muted text-muted-foreground shadow-neo-sm hover:brightness-95'
           }`}
         >
           Tous
@@ -67,8 +67,10 @@ export function ContactsPage() {
           <button
             key={g.id}
             onClick={() => setActiveGroupId(g.id === activeGroupId ? null : g.id)}
-            className={`rounded-full px-3 py-1 text-sm font-medium text-white transition-opacity ${
-              activeGroupId === g.id ? 'opacity-100' : 'opacity-60 hover:opacity-80'
+            className={`rounded-full px-3 py-1 text-sm font-medium text-white transition-all ${
+              activeGroupId === g.id
+                ? 'shadow-neo-pressed opacity-100'
+                : 'shadow-neo-sm opacity-70 hover:opacity-90'
             }`}
             style={{ backgroundColor: g.color }}
           >
@@ -79,8 +81,8 @@ export function ContactsPage() {
 
       {filtered.length === 0 ? (
         <EmptyState
-          message="Aucun contact trouvé."
-          ctaLabel="Ajouter un contact"
+          message="Aucune personne trouvée."
+          ctaLabel="Ajouter une personne"
           onCta={() => navigate({ to: '/contacts/new' })}
         />
       ) : (
@@ -90,7 +92,7 @@ export function ContactsPage() {
               key={c.id}
               contact={c}
               group={getGroup(c.groupId)}
-              onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
+              onClick={() => navigate({ to: '/contacts/$id/edit', params: { id: c.id } })}
             />
           ))}
         </div>

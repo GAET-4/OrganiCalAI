@@ -26,18 +26,28 @@ export function GroupsPage() {
         {groups.map((g) => (
           <Card
             key={g.id}
-            className="cursor-pointer transition-shadow hover:shadow-md"
+            className="cursor-pointer transition-shadow hover:shadow-neo-sm"
             onClick={() => navigate({ to: '/groups/$id', params: { id: g.id } })}
           >
             <CardContent className="flex items-center gap-4 p-4">
-              <div
-                className="h-10 w-10 rounded-full shrink-0"
-                style={{ backgroundColor: g.color }}
-              />
+              {g.avatarUrl ? (
+                <img
+                  src={g.avatarUrl}
+                  alt={g.name}
+                  className="h-10 w-10 rounded-full object-cover shrink-0"
+                />
+              ) : (
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-full shrink-0 text-white text-xs font-semibold"
+                  style={{ backgroundColor: g.color }}
+                >
+                  {g.name.slice(0, 2).toUpperCase()}
+                </div>
+              )}
               <div className="flex-1">
                 <p className="font-semibold">{g.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  {countByGroup(g.id)} contact{countByGroup(g.id) > 1 ? 's' : ''}
+                  {countByGroup(g.id)} personne{countByGroup(g.id) > 1 ? 's' : ''}
                 </p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />

@@ -25,7 +25,7 @@ export function HomePage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold mb-1">Bonjour 👋</h2>
-        <p className="text-muted-foreground">{contacts.length} contacts · {groups.length} groupes</p>
+        <p className="text-muted-foreground">{contacts.length} personnes · {groups.length} groupes</p>
       </div>
 
       <UpcomingBanner contacts={upcoming} />
@@ -41,7 +41,7 @@ export function HomePage() {
                 key={c.id}
                 contact={c}
                 group={getGroup(c.groupId)}
-                onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
+                onClick={() => navigate({ to: '/contacts/$id/edit', params: { id: c.id } })}
               />
             ))}
           </div>
@@ -59,7 +59,7 @@ export function HomePage() {
                 key={c.id}
                 contact={c}
                 group={getGroup(c.groupId)}
-                onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
+                onClick={() => navigate({ to: '/contacts/$id/edit', params: { id: c.id } })}
               />
             ))}
           </div>
