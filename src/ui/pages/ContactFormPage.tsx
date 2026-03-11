@@ -30,10 +30,21 @@ interface ContactFormPageProps {
 export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
   const navigate = useNavigate()
   const { data: groups = [] } = useGetGroups()
-  const { data: existingContact } = useGetContactById(contactId ?? '')
+  const { data: existingContact, isLoading: contactLoading } = useGetContactById(contactId ?? '')
 
   const createContact = useCreateContact()
   const updateContact = useUpdateContact()
+
+  // Wait for existing contact data before rendering form to ensure defaultValues are set
+  if (mode === 'edit' && contactLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+        <div className="h-10 w-full bg-muted rounded animate-pulse" />
+        <div className="h-10 w-full bg-muted rounded animate-pulse" />
+      </div>
+    )
+  }
 
   const {
     register,
