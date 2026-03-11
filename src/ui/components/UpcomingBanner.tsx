@@ -18,10 +18,10 @@ export function UpcomingBanner({ contacts }: UpcomingBannerProps) {
       : `Dans ${next.daysUntil} jours`
 
   return (
-    <div className="flex items-center gap-3 rounded-xl bg-primary/10 p-4">
-      <PartyPopper className="h-8 w-8 text-primary shrink-0" />
+    <div className="flex items-center gap-3 rounded-2xl bg-accent/20 p-4 shadow-neo-sm">
+      <PartyPopper className="h-8 w-8 text-accent-foreground shrink-0" />
       <div>
-        <p className="font-semibold text-primary">Prochain anniversaire</p>
+        <p className="font-semibold text-accent-foreground">Prochain anniversaire</p>
         <p className="text-sm">
           {getFullName(next)} — {dayLabel}
         </p>
