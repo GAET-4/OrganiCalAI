@@ -6,6 +6,7 @@ import type { Contact } from './Contact'
  */
 export function daysUntilBirthday(contact: Contact): number {
   const today = new Date()
+  today.setHours(0, 0, 0, 0)
   const birthday = new Date(contact.birthday)
 
   const next = new Date(today.getFullYear(), birthday.getMonth(), birthday.getDate())
