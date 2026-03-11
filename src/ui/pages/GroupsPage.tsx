@@ -27,7 +27,6 @@ export function GroupsPage() {
           <Card
             key={g.id}
             className="cursor-pointer transition-shadow hover:shadow-md"
-            // @ts-ignore - route registered in Task 21
             onClick={() => navigate({ to: '/groups/$id', params: { id: g.id } })}
           >
             <CardContent className="flex items-center gap-4 p-4">

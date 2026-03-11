@@ -32,7 +32,6 @@ export function ContactDetailPage({ contactId }: ContactDetailPageProps) {
   const handleDelete = async () => {
     await deleteContact.mutateAsync(contact.id)
     toast.success('Contact supprimé')
-    // @ts-ignore - route registered in Task 21
     navigate({ to: '/contacts' })
   }
 
@@ -40,7 +39,6 @@ export function ContactDetailPage({ contactId }: ContactDetailPageProps) {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="icon" onClick={() =>
-          // @ts-ignore
           navigate({ to: '/contacts' })
         }>
           <ArrowLeft className="h-5 w-5" />
@@ -49,7 +47,6 @@ export function ContactDetailPage({ contactId }: ContactDetailPageProps) {
         <Button
           variant="outline"
           size="icon"
-          // @ts-ignore
           onClick={() => navigate({ to: '/contacts/$id/edit', params: { id: contact.id } })}
         >
           <Pencil className="h-4 w-4" />

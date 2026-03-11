@@ -77,7 +77,6 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
       toast.success('Contact mis à jour')
     }
 
-    // @ts-ignore - route registered in Task 21
     navigate({ to: '/contacts' })
   }
 
@@ -85,7 +84,6 @@ export function ContactFormPage({ mode, contactId }: ContactFormPageProps) {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="icon" onClick={() =>
-          // @ts-ignore
           navigate({ to: '/contacts' })
         }>
           <ArrowLeft className="h-5 w-5" />

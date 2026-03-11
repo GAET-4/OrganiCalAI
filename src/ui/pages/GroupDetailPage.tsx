@@ -26,7 +26,6 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="icon" onClick={() =>
-          // @ts-ignore
           navigate({ to: '/groups' })
         }>
           <ArrowLeft className="h-5 w-5" />
@@ -46,7 +45,6 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
         <EmptyState
           message="Aucun contact dans ce groupe."
           ctaLabel="Ajouter un contact"
-          // @ts-ignore
           onCta={() => navigate({ to: '/contacts/new' })}
         />
       ) : (
@@ -56,7 +54,6 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
               key={c.id}
               contact={c}
               group={group}
-              // @ts-ignore
               onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
             />
           ))}

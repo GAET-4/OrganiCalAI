@@ -35,7 +35,6 @@ export function ContactsPage() {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Contacts</h2>
         <Button size="sm" onClick={() =>
-          // @ts-ignore - route registered in Task 21
           navigate({ to: '/contacts/new' })
         }>
           <Plus className="h-4 w-4 mr-1" />
@@ -82,7 +81,6 @@ export function ContactsPage() {
         <EmptyState
           message="Aucun contact trouvé."
           ctaLabel="Ajouter un contact"
-          // @ts-ignore - route registered in Task 21
           onCta={() => navigate({ to: '/contacts/new' })}
         />
       ) : (
@@ -92,7 +90,6 @@ export function ContactsPage() {
               key={c.id}
               contact={c}
               group={getGroup(c.groupId)}
-              // @ts-ignore - route registered in Task 21
               onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
             />
           ))}

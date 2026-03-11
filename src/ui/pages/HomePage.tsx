@@ -41,7 +41,6 @@ export function HomePage() {
                 key={c.id}
                 contact={c}
                 group={getGroup(c.groupId)}
-                // @ts-ignore - route registered in Task 21
                 onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
               />
             ))}
@@ -60,7 +59,6 @@ export function HomePage() {
                 key={c.id}
                 contact={c}
                 group={getGroup(c.groupId)}
-                // @ts-ignore - route registered in Task 21
                 onClick={() => navigate({ to: '/contacts/$id', params: { id: c.id } })}
               />
             ))}
