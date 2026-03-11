@@ -1,0 +1,39 @@
+[
+  {
+    "id": "1",
+    "firstName": "Marie",
+    "lastName": "Dupont",
+    "birthday": "1990-03-15",
+    "groupId": "1",
+    "notes": "Aime le chocolat noir"
+  },
+  {
+    "id": "2",
+    "firstName": "Thomas",
+    "lastName": "Martin",
+    "birthday": "1985-06-22",
+    "groupId": "2"
+  },
+  {
+    "id": "3",
+    "firstName": "Sophie",
+    "lastName": "Leroy",
+    "birthday": "1992-12-01",
+    "groupId": "2",
+    "notes": "Offrir des livres"
+  },
+  {
+    "id": "4",
+    "firstName": "Jean",
+    "lastName": "Bernard",
+    "birthday": "1978-09-10",
+    "groupId": "3"
+  },
+  {
+    "id": "5",
+    "firstName": "Claire",
+    "lastName": "Moreau",
+    "birthday": "1995-03-20",
+    "groupId": "1"
+  }
+]
