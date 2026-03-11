@@ -1,14 +1,6 @@
 import { Link } from '@tanstack/react-router'
-import { Home, Users, UsersRound } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const navItems = [
-  { to: '/', label: 'Accueil', icon: Home },
-  // @ts-expect-error - routes added in Task 21
-  { to: '/contacts', label: 'Contacts', icon: Users },
-  // @ts-expect-error - routes added in Task 21
-  { to: '/groups', label: 'Groupes', icon: UsersRound },
-] as const
+import { navItems } from '@/ui/nav/navItems'
 
 export function BottomNav() {
   return (
